@@ -49,12 +49,17 @@ export function proxy(request: NextRequest) {
   }
 }
 
+// export const config = {
+//   matcher: [
+//     /*
+//      * API routes, Next.js internal files aur static images ko
+//      * proxy se exclude kar rahe hain.
+//      */
+//     "/((?!api|_next/static|_next/image|favicon.ico).*)",
+//   ],
+// };
 export const config = {
   matcher: [
-    /*
-     * API routes, Next.js internal files aur static images ko
-     * proxy se exclude kar rahe hain.
-     */
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
   ],
 };
