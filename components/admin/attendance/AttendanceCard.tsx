@@ -13,9 +13,9 @@ export default function AttendanceCard({ attendance }: Props) {
       <div className="space-y-1 text-[17px] flex justify-between ">
         <div className="flex gap-5">
           <p>Present : {attendance.present}</p>
-          <p>Absent : {attendance.absent}</p>
+          <p>Absent : {attendance.unpaidLeave}</p>
           <p>Paid Leave : {attendance.paidLeave}</p>
-          <p>Unpaid Leave : {attendance.unpaidLeave}</p>
+          {/* <p>Unpaid Leave : {attendance.unpaidLeave}</p> */}
           <p>Half Day : {attendance.halfDay}</p>
           <p>Total Staff : {attendance.totalStaff}</p>
         </div>

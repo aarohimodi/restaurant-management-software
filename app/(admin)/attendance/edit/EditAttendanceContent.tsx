@@ -3,6 +3,7 @@ import EditAttendanceForm from "@/components/admin/attendance/EditAttendanceForm
 import AttendanceService from "@/services/AttendanceService";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+
 export default function EditAttendanceContent() {
   const searchParams = useSearchParams();
   const date = searchParams.get("date");
@@ -25,7 +26,8 @@ export default function EditAttendanceContent() {
         alert(response.message);
       }
     } catch (error) {
-      console.error(error);
+      // console.error(error);
+      console.error("EDIT ATTENDANCE ERROR:", error);
       alert("Something went wrong");
     } finally {
       setLoading(false);

@@ -1,7 +1,7 @@
 import { dateToUTC, getTodayDateInputValue } from "@/lib/date/dateOnly";
 import { connectDB } from "@/lib/db";
 import Attendance from "@/models/Attendance";
-
+import "@/models/Staff";
 export async function POST(request: Request) {
   try {
     await connectDB();

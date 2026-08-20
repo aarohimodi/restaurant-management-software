@@ -119,12 +119,23 @@ export default function AttendanceForm({ staffs }: AttendanceFormProps) {
                     />
                     Present
                   </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
+                  {/* <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="radio"
                       name={`attendance-${staff._id}`}
                       checked={selectedAttendance?.status === "Absent"}
                       onChange={() => handleStatusChange(staff._id!, "Absent")}
+                    />
+                    Absent
+                  </label> */}
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name={`attendance-${staff._id}`}
+                      checked={selectedAttendance?.status === "Unpaid Leave"}
+                      onChange={() =>
+                        handleStatusChange(staff._id!, "Unpaid Leave")
+                      }
                     />
                     Absent
                   </label>
@@ -149,18 +160,6 @@ export default function AttendanceForm({ staffs }: AttendanceFormProps) {
                       }
                     />
                     Paid Leave
-                  </label>
-
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      name={`attendance-${staff._id}`}
-                      checked={selectedAttendance?.status === "Unpaid Leave"}
-                      onChange={() =>
-                        handleStatusChange(staff._id!, "Unpaid Leave")
-                      }
-                    />
-                    Unpaid Leave
                   </label>
                 </div>
                 {(selectedAttendance?.status === "Paid Leave" ||

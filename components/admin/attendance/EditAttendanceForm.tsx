@@ -9,14 +9,19 @@ interface EditAttendanceFormProps {
   date: string;
 }
 
+// const attendanceStatus: AttendanceStatus[] = [
+//   "Present",
+//   "Absent",
+//   "Half Day",
+//   "Paid Leave",
+//   "Unpaid Leave",
+// ];
 const attendanceStatus: AttendanceStatus[] = [
   "Present",
-  "Absent",
+  "Unpaid Leave",
   "Half Day",
   "Paid Leave",
-  "Unpaid Leave",
 ];
-
 export default function EditAttendanceForm({
   attendance,
   date,
@@ -104,7 +109,7 @@ export default function EditAttendanceForm({
                     onChange={() => handleStatusChange(item._id, status)}
                   />
 
-                  <span>{status}</span>
+                  <span>{status === "Unpaid Leave" ? "Absent" : status}</span>
                 </label>
               ))}
               {(item.status === "Paid Leave" ||
