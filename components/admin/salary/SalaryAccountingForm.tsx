@@ -8,6 +8,7 @@ import { staff } from "@/types/staff.types";
 import SalaryDetails from "./SalaryDetails";
 import SalaryPayModal from "./SalaryPayModal";
 import toast from "react-hot-toast";
+import { formatDateIN } from "@/lib/date/dateOnly";
 export default function SalaryAccountingForm() {
   const months = [
     { value: 1, label: "January" },
@@ -69,7 +70,14 @@ export default function SalaryAccountingForm() {
       if (response.success) {
         setSalary(response.data);
       } else {
-        toast.error(response.missingDates);
+        toast.error(
+          `Attendance is missing for: ${response.missingDates
+            .map((dates: any) => formatDateIN(dates))
+            .join(", ")}`,
+        );
+        // toast.error(
+        //         `Attendance is missing for ${formatDateIN(response.missingDates)}`,
+        //       );
 
         setSalary(null);
       }
