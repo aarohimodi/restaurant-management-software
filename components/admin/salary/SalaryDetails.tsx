@@ -36,7 +36,7 @@ export default function SalaryDetails({ salary }: SalaryDetailsProps) {
         <div className="border rounded-lg p-3">
           <p className="text-sm text-gray-500">Absent</p>
 
-          <p className="text-xl font-bold">{salary.absent}</p>
+          <p className="text-xl font-bold">{salary.unpaidLeave}</p>
         </div>
 
         <div className="border rounded-lg p-3">
@@ -51,11 +51,11 @@ export default function SalaryDetails({ salary }: SalaryDetailsProps) {
           <p className="text-xl font-bold">{salary.halfDay}</p>
         </div>
 
-        <div className="border rounded-lg p-3">
+        {/* <div className="border rounded-lg p-3">
           <p className="text-sm text-gray-500">Unpaid Leave</p>
 
           <p className="text-xl font-bold">{salary.unpaidLeave}</p>
-        </div>
+        </div> */}
       </div>
 
       {/* Salary */}
