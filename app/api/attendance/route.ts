@@ -1,7 +1,7 @@
 import { dateToUTC, getTodayDateInputValue } from "@/lib/date/dateOnly";
 import { connectDB } from "@/lib/db";
 import Attendance from "@/models/Attendance";
-import "@/models/Staff";
+import Staff from "@/models/Staff";
 export async function POST(request: Request) {
   try {
     await connectDB();
@@ -28,31 +28,77 @@ export async function POST(request: Request) {
     }));
     const nextDay = new Date(attendanceDate);
     nextDay.setUTCDate(nextDay.getUTCDate() + 1);
-    const existingAttendance = await Attendance.findOne({
+    // const existingAttendance = await Attendance.findOne({
+    //   date: {
+    //     $gte: attendanceDate,
+    //     $lt: nextDay,
+    //   },
+    // });
+    const existingAttendances = await Attendance.find({
       date: {
         $gte: attendanceDate,
         $lt: nextDay,
       },
     });
-    console.log("Existing Attendance:", existingAttendance);
-
-    const allAttendance = await Attendance.find({});
-    console.log(
-      allAttendance.map((item) => ({
-        date: item.date,
-        staff: item.staff,
-      })),
+    const eligibleStaffs = await Staff.find({
+      joiningDate: { $lte: attendanceDate },
+      $or: [
+        { leftDate: { $exists: false } },
+        { leftDate: null },
+        { leftDate: { $gte: attendanceDate } },
+      ],
+    });
+    const existingStaffIds = existingAttendances.map((item) =>
+      item.staff.toString(),
     );
-    if (existingAttendance) {
-      return Response.json(
-        {
-          success: false,
-          message: "Attendance already marked for this date",
-        },
-        { status: 400 },
-      );
+    const missingStaffs = eligibleStaffs.filter(
+      (staff) => !existingStaffIds.includes(staff._id.toString()),
+    );
+
+    const missingStaffsIds = missingStaffs.map((staff) => staff._id.toString());
+
+    const missingAttendanceData = attendanceData.filter((item: any) =>
+      missingStaffsIds.includes(item.staff.toString()),
+    );
+
+    if (missingAttendanceData.length === 0) {
+      return Response.json({
+        success: false,
+        message: "Today's attendance is already filled",
+      });
     }
-    await Attendance.insertMany(attendanceData);
+    // console.log(
+    //   "Eligible Staff:",
+    //   eligibleStaffs.map((staff) => staff.name),
+    // );
+
+    // console.log("Existing Staff IDs:", existingStaffIds);
+
+    // console.log(
+    //   "Missing Staff:",
+    //   missingStaffs.map((staff) => staff.name),
+    // );
+
+    // console.log("Missing Attendance Data:", missingAttendanceData);
+    // console.log("Existing Attendance:", existingAttendance);
+
+    // const allAttendance = await Attendance.find({});
+    // console.log(
+    //   allAttendance.map((item) => ({
+    //     date: item.date,
+    //     staff: item.staff,
+    //   })),
+    // );
+    // if (existingAttendance) {
+    //   return Response.json(
+    //     {
+    //       success: false,
+    //       message: "Attendance already marked for this date",
+    //     },
+    //     { status: 400 },
+    //   );
+    // }
+    await Attendance.insertMany(missingAttendanceData);
     return Response.json({
       success: true,
       message: "Attendance marked successfully",

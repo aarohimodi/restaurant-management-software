@@ -26,6 +26,11 @@ const AttendanceService = {
     const response = await fetch(`/api/attendance?date=${date}`);
     return response.json();
   },
+  async getMissingAttendance(date: string) {
+    const response = await fetch(`/api/attendance/missing?date=${date}`);
+
+    return response.json();
+  },
   async updateAttendance(data: {
     date: string;
     attendance: EditAttendanceItem[];
