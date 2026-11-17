@@ -53,6 +53,7 @@ export default function LoginForm() {
     <div className="min-h-screen bg-slate-100 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Login Card */}
+
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           {/* Header */}
           <div className="bg-black px-6 pt-8 pb-7 text-center">
@@ -73,7 +74,10 @@ export default function LoginForm() {
               Sign in to your restaurant management panel
             </p>
           </div>
-
+          <div className="flex justify-center bg-red-400 text-white">
+            <h3>Email: admin@gmail.com | </h3>{" "}
+            <h3>&nbsp; Password: 12345678</h3>
+          </div>
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="p-7">
             <div className="space-y-5">
